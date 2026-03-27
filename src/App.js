@@ -16,9 +16,9 @@ function App() {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Hello!</h1>
+      <h1>Hello User!</h1>
 
-      <h2>Streaming Accounts</h2>
+      <h2>Streaming</h2>
       <ul>
         {data.streaming.map((item, index) => (
           <li key={index}>
@@ -47,6 +47,37 @@ function App() {
           </li>
         ))}
       </ul>
+
+      <h2>Software</h2>
+      <ul>
+        {data.software.map((item, index) => (
+          <li key={index}>
+            <a
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {item.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <h2>Blogging</h2>
+      <ul>
+        {data.blogging.map((item, index) => (
+          <li key={index}>
+            <a
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {item.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+
     </div>
   );
 
