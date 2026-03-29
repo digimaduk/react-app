@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState } from "react";
 
@@ -7,77 +7,36 @@ function App() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    fetch("https://backend-2os3.onrender.com/links")
+    fetch("https://mongodb-nodejs-service.onrender.com/api/links")
       .then(res => res.json())
       .then(json => setData(json));
   }, []);
 
   if (!data) return <p>Loading...</p>;
 
+  const grouped = data.reduce((acc, item) => {
+    acc[item.category] = acc[item.category] || [];
+    acc[item.category].push(item);
+    return acc;
+  }, {});
+
   return (
     <div style={{ padding: "20px" }}>
       <h1>Hello User!</h1>
-
-      <h2>Streaming</h2>
-      <ul>
-        {data.streaming.map((item, index) => (
-          <li key={index}>
-            <a
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {item.name}
-            </a>
-          </li>
-        ))}
-      </ul>
-
-      <h2>Music</h2>
-      <ul>
-        {data.music.map((item, index) => (
-          <li key={index}>
-            <a
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {item.name}
-            </a>
-          </li>
-        ))}
-      </ul>
-
-      <h2>Software</h2>
-      <ul>
-        {data.software.map((item, index) => (
-          <li key={index}>
-            <a
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {item.name}
-            </a>
-          </li>
-        ))}
-      </ul>
-
-      <h2>Blogging</h2>
-      <ul>
-        {data.blogging.map((item, index) => (
-          <li key={index}>
-            <a
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {item.name}
-            </a>
-          </li>
-        ))}
-      </ul>
-
+      {Object.keys(grouped).map((category) => (
+        <div key={category}>
+          <h2>{category}</h2>
+          <ul>
+            {grouped[category].map((item) => (
+              <li key={item.name}>
+                <a href={item.url} target="_blank" rel="noopener noreferrer">
+                  {item.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   );
 
